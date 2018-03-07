@@ -1,0 +1,32 @@
+- hosts: all
+  tasks:
+
+##  - name: install cowsay
+##    sudo: yes
+##    when: ansible_os_family == "Debian"
+##    # the following is equivalent to `apt name=cowsay state=present`
+##    # but reads better with modules that have lots of options
+##    apt:
+##      name: cowsay
+##      state: present
+ 
+  # Another task, indented at the same level with a new "- name:" field.
+  - name: install vim
+    sudo: yes
+    when: ansible_os_family == "Debian"
+    apt:
+      name: figlet
+      state: present
+ 
+  # Lists can eliminate some repetition
+  - name: install a list of packages
+    sudo: yes
+    when: ansible_os_family == "Debian"
+    apt:
+      # {{item}} is a variable, used by with_items below.
+      name: "{{item}}"
+      state: present
+    with_items:
+      - vim
+      - traceroute
+      - playonlinux
